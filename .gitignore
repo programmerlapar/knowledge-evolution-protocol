@@ -1,0 +1,3 @@
+# local scratch / editor junk
+*.kep.bak
+.DS_Store

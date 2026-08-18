@@ -1,0 +1,68 @@
+# Knowledge Evolution Protocol (KEP) — brain-first contract
+
+This file is auto-loaded in **every** opencode session, in **every** project. Follow it
+unconditionally for non-trivial work.
+
+> **Brain root:** defaults to `~/.config/opencode/brain/`. If the environment variable
+> `KEP_BRAIN_DIR` is set, use that path instead. Check it with `echo "$KEP_BRAIN_DIR"` before
+> reading or writing brain files. All `brain/...` paths below follow this override.
+
+## Retrieve before
+
+Before any non-trivial coding, debugging, or research task, consult the brain FIRST:
+
+1. Search the `opencode` brain (and the `openclaw` brain if present) via the `qmd` MCP tools:
+   `search` (BM25, exact), then `vsearch` (semantic), or `query` (hybrid) when precision matters.
+2. Read only the **top 1–3 hits**. If a hit is relevant, apply it before acting.
+3. Announce the retrieval inline so a human can verify it:
+
+   ```
+   [brain] searched "<topic>" → N hits
+   [brain] applied <namespace>/<domain>/<name>.md
+   ```
+
+4. If no relevant hit exists, proceed — then consider capturing what you learn (below).
+
+## Capture after
+
+Whenever you learn something durable — a working fix, a reusable pattern, a gotcha, project
+knowledge, a debugging breakthrough — record it:
+
+1. Write to `<brain-root>/<namespace>/<domain>/<name>.md` with frontmatter
+   (`topic`, `queries`, `tags`, `updated`). Patch an existing file if the topic already exists.
+2. Reindex after every write:
+   ```bash
+   qmd update -c opencode
+   qmd embed -c opencode
+   ```
+   (Use `-c openclaw` too if you edited that collection.)
+3. Announce: `[brain] captured <namespace>/<topic>.md (reindexed)`
+
+## Mandatory issue capture — REQUIRED
+
+Any resolved issue / bug / debugging breakthrough MUST be recorded **before the task is
+considered done**. This is non-negotiable, not a judgment call:
+
+1. Write to `<brain-root>/issues/<domain>/<name>.md`.
+2. Frontmatter `queries` MUST include the **exact error string**, the **symptom**, and the
+   **fix terms**, so the same error is found verbatim next time.
+3. Body MUST contain: symptom, exact error, root cause, fix steps, `updated` date.
+4. Reindex and announce as above.
+
+## Session sweep
+
+At the end of a significant session, append/update `<brain-root>/memory/YYYY-MM-DD.md`
+with decisions made, new facts captured, and issues fixed — catching anything missed mid-task.
+
+## Guardrails
+
+- **Never** store secrets, tokens, passwords, or credentials.
+- Summarize; do not dump raw transcripts.
+- Keep retrievals small (top 1–3 hits) to stay fast and cheap.
+- One-off banter with no future value → do not capture.
+
+## Files
+
+- Brain root: `${KEP_BRAIN_DIR:-~/.config/opencode/brain/}` (env override supported)
+- Search index + MCP: QMD (`qmd`). Server: `qmd mcp` (registered as the `qmd` MCP server).
+- Skill: `knowledge-evolution-protocol` (full workflow reference).
