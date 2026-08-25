@@ -68,7 +68,9 @@ fi
 
 # --- 4. Index the brain ------------------------------------------------------
 log "Indexing brain (update + embed)..."
-"$QMD_CMD" update -c opencode
+if ! "$QMD_CMD" update; then
+  warn "update failed — the opencode collection can be reindexed with 'qmd update' after fixing any unrelated collection errors."
+fi
 "$QMD_CMD" embed -c opencode || warn "embed failed — embeddings will generate on next qmd embed"
 
 # --- 5. AGENTS.md contract (merge, never clobber) ----------------------------

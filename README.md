@@ -25,6 +25,28 @@ patterns across sessions — in every project.
 
 ## Install
 
+### Windows PowerShell
+
+Prerequisites: [Node.js](https://nodejs.org/) with `npm`, and OpenCode. From PowerShell:
+
+```powershell
+git clone https://github.com/programmerlapar/knowledge-evolution-protocol.git
+Set-Location knowledge-evolution-protocol
+powershell -ExecutionPolicy Bypass -File .\scripts\install.ps1
+```
+
+The PowerShell installer installs `qmd` with npm when needed, creates the global
+`$HOME\.config\opencode` brain, installs the skill and `/remember` command, and registers
+the Windows `qmd.cmd mcp` command in `opencode.json`. It does not require Git Bash or Python.
+
+If PowerShell blocks script execution, `-ExecutionPolicy Bypass` applies only to this process.
+Set `KEP_OPENCODE_DIR`, `KEP_BRAIN_DIR`, `KEP_QMD_CMD`, or `KEP_NO_INSTALL=1` in the PowerShell
+environment before running the script when you need the same overrides as the Bash installer.
+
+Then restart OpenCode.
+
+### macOS, Linux, or Git Bash
+
 ```bash
 git clone <this-repo> && cd <this-repo>
 bash scripts/install.sh
@@ -67,6 +89,7 @@ SKILL.md                 # portable agent skill (retrieval + capture + indexing)
 AGENTS.md.template       # always-on contract, installed to ~/.config/opencode/AGENTS.md
 command/remember.md      # /remember capture command
 scripts/install.sh       # one-shot idempotent installer
+scripts/install.ps1      # native Windows PowerShell installer
 tests/                   # test suite (Tier 1-2 plumbing; Tier 3 e2e gated by RUN_E2E=1)
 brain/                   # empty namespace scaffold (your data lives in ~/.config/opencode/brain)
 ```
