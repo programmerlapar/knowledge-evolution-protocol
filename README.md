@@ -45,10 +45,43 @@ environment before running the script when you need the same overrides as the Ba
 
 Then restart OpenCode.
 
-### macOS, Linux, or Git Bash
+### macOS
+
+Prerequisites: [Git](https://git-scm.com/), [Node.js 22 or newer](https://nodejs.org/) with
+`npm`, and OpenCode. From Terminal, run these commands from the directory where you keep
+your tools:
 
 ```bash
-git clone <this-repo> && cd <this-repo>
+git clone https://github.com/programmerlapar/knowledge-evolution-protocol.git
+cd knowledge-evolution-protocol
+bash scripts/install.sh
+```
+
+The installer installs QMD globally with npm when needed. It creates the brain at
+`~/.config/opencode/brain`, installs the KEP skill and `/remember` command, and registers
+the QMD MCP server in your global OpenCode config. It is safe to run again.
+
+If you already have `~/.config/opencode/opencode.jsonc` with comments or trailing commas,
+the installer may warn that it cannot parse the file as strict JSON. Add this entry manually
+under the top-level `mcp` object, preserving any existing MCP entries:
+
+```json
+"qmd": { "type": "local", "command": ["qmd", "mcp"], "enabled": true }
+```
+
+Restart OpenCode after installation. Verify the setup with:
+
+```bash
+qmd collection list
+grep -n '"qmd"' ~/.config/opencode/opencode.jsonc 2>/dev/null || \
+grep -n '"qmd"' ~/.config/opencode/opencode.json
+```
+
+### Linux or Git Bash
+
+```bash
+git clone https://github.com/programmerlapar/knowledge-evolution-protocol.git
+cd knowledge-evolution-protocol
 bash scripts/install.sh
 ```
 
